@@ -50,7 +50,7 @@ public class ServiceView extends Controller {
 			String[] urlPara = {null};
 			Action action = jfinal.getAction(actionName, urlPara);
 			if (action != null && action.getMethod().isAnnotationPresent(WebService.class)) {
-				html.append(String.format("<li><a target=\"_blank\" href=\"%s/details?service=%s\">%s</a></li>", mappingName, URLEncoder.encode(actionName, "UTF-8"), actionName));
+				html.append(String.format("<li><a target=\"_blank\" href=\"%s%s/details?service=%s\">%s</a></li>", getRequest().getContextPath(), mappingName, URLEncoder.encode(actionName, "UTF-8"), actionName));
 			}
 		}
 		
@@ -70,7 +70,7 @@ public class ServiceView extends Controller {
 		
 		Method method = action.getMethod();
 		
-		setAttr("url", service);
+		setAttr("url", getRequest().getContextPath() + service);
 		
 		if (method.isAnnotationPresent(Before.class)) {
 			Before before = method.getAnnotation(Before.class);
